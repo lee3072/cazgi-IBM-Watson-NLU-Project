@@ -45,12 +45,12 @@ class App extends React.Component {
         response.text().then((data)=>{
         this.setState({sentimentOutput:data});
         let output = data;
-        if(data === "positive") {
+        if(data.indexOf("pos")!== -1) {
           output = <div style={{color:"green",fontSize:20}}>{data}</div>
-        } else if (data === "negative"){
+        } else if (data.indexOf("neg")!== -1){
           output = <div style={{color:"red",fontSize:20}}>{data}</div>
         } else {
-          output = <div style={{color:"orange",fontSize:20}}>{data}</div>
+          output = <div style={{color:"yellow",fontSize:20}}>{data}</div>
         }
         this.setState({sentimentOutput:output});
       })});

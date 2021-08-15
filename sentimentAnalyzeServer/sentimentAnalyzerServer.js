@@ -29,23 +29,82 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
-
-    return res.send({"happy":"90","sad":"10"});
+    const analyzeParams = {
+        'url': req.query.url,
+        'features': {
+            'emotion': {
+                document:true
+            }   
+        }
+    }
+    getNLUInstance().analyze(analyzeParams)
+    .then(results=>{
+        console.log(JSON.stringify(results.result, null, 2))
+        return res.send(JSON.stringify(results.result.emotion.document.emotion, null, 2));
+    })
+    .catch(error=>{
+        return res.send(JSON.stringify(error))
+    });
 });
 
 app.get("/url/sentiment", (req,res) => {
-    return res.send("url sentiment for "+req.query.url);
+    const analyzeParams = {
+        'url': req.query.url,
+        'features': {
+            'sentiment': {
+                document:true
+            }   
+        }
+    }
+    getNLUInstance().analyze(analyzeParams)
+    .then(results=>{
+        console.log(JSON.stringify(results.result, null, 2))
+        return res.send(JSON.stringify(results.result.sentiment.document.label, null, 2));
+    })
+    .catch(error=>{
+        return res.send(JSON.stringify(error))
+    });
 });
 
 app.get("/text/emotion", (req,res) => {
-    return res.send({"happy":"10","sad":"90"});
+    const analyzeParams = {
+        'text': req.query.text,
+        'features': {
+            'emotion': {
+                document:true
+            }   
+        }
+    }
+    getNLUInstance().analyze(analyzeParams)
+    .then(results=>{
+        console.log(JSON.stringify(results.result, null, 2))
+        return res.send(JSON.stringify(results.result.emotion.document.emotion, null, 2));
+    })
+    .catch(error=>{
+        return res.send(JSON.stringify(error))
+    });
 });
 
 app.get("/text/sentiment", (req,res) => {
-    return res.send("text sentiment for "+req.query.text);
+    const analyzeParams = {
+        'text': req.query.text,
+        'features': {
+            'sentiment': {
+                document:true
+            }   
+        }
+    }
+    getNLUInstance().analyze(analyzeParams)
+    .then(results=>{
+        console.log(JSON.stringify(results.result, null, 2))
+        return res.send(JSON.stringify(results.result.sentiment.document.label, null, 2));
+    })
+    .catch(error=>{
+        return res.send(JSON.stringify(error))
+    });
 });
 
-let server = app.listen(8080, () => {
+let server = app.listen(8081, () => {
     console.log('Listening', server.address().port)
 })
 
